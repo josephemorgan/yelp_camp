@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render("./campgrounds/index", {campgrounds:campgrounds});
+			res.render("./campgrounds/index", {campgrounds:campgrounds, page: 'campgrounds'});
 		}
 	})
 });
@@ -20,6 +20,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
 			name: req.body.name,
 			image: req.body.image,
 			description: req.body.description,
+			price: req.body.price,
 			author: {
 				id: req.user._id,
 				username: req.user.username
@@ -29,9 +30,9 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
 				console.log(err);
 			} else {
 				console.log("Campground created: " + new_campground);
+				res.redirect('/campgrounds/' + new_campground._id);
 			}
 		});
-	res.redirect('/');
 });
 
 router.get('/new', middleware.isLoggedIn, (req, res) => {
@@ -58,7 +59,8 @@ router.put('/:id', (req, res) => {
 	Campground.findByIdAndUpdate(req.params.id, {
 		name: req.body.name,
 		image: req.body.image,
-		description: req.body.description
+		description: req.body.description,
+		price: req.body.price
 	}, (err, campground) => {
 		if (err) {
 			res.redirect("/campgrounds");
