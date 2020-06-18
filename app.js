@@ -9,7 +9,7 @@ const express = require('express'),
 	User = require("./models/user"),
 	methodOverride = require("method-override"),
 	flash = require("connect-flash"),
-	LISTEN_PORT = 3000;
+	LISTEN_PORT = 9092;
 
 const commentRoutes = require("./routes/comments"),
 	campgroundRoutes = require("./routes/campgrounds"),
